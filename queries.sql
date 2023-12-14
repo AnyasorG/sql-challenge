@@ -1,16 +1,15 @@
 -- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
 -- Link to schema: https://app.quickdatabasediagrams.com/#/d/xLERwD
--- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
 
 
 CREATE TABLE "employees" (
     "emp_no" INT   NOT NULL,
     "emp_title_id" VARCHAR(250)   NOT NULL,
-    "birth_date" VARCHAR(250)   NOT NULL,
+    "birth_date" DATE   NOT NULL,
     "first_name" VARCHAR(250)   NOT NULL,
     "last_name" VARCHAR(250)   NOT NULL,
     "sex" VARCHAR(250)   NOT NULL,
-    "hire_date" VARCHAR(250)   NOT NULL,
+    "hire_date" DATE   NOT NULL,
     CONSTRAINT "pk_employees" PRIMARY KEY (
         "emp_no"
      )
@@ -73,8 +72,6 @@ REFERENCES "departments" ("dept_no");
 
 
 
-
-
 -- Query 1: List the employee number, last name, first name, sex, and salary of each employee. 
 
 SELECT
@@ -91,14 +88,12 @@ JOIN
 
 -- Query 2: List the first name, last name, and hire date for the employees who were hired in 1986.
 
-SELECT
-    first_name AS "First Name",
-    last_name AS "Last Name",
-    hire_date AS "Hire Date"
-FROM
-    employees
-WHERE
-    EXTRACT(YEAR FROM TO_DATE(hire_date, 'MM/DD/YYYY')) = 1986;
+SELECT 
+	first_name AS "First Name", 
+	last_name AS "Last Name",
+	hire_date AS "Hire Date"
+FROM employees
+WHERE hire_date >= '1986-01-01' AND hire_date < '1987-01-01';
 
 
 -- Query 3: List the manager of each department along with their department number, department name, employee number, last name, and first name.
